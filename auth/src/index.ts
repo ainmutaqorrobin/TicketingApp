@@ -1,12 +1,18 @@
 import express from "express";
 import { json } from "body-parser";
-
+import {
+  currentUserRouter,
+  signinRouter,
+  signoutRouter,
+  signupRouter,
+} from "./routes";
 const app = express();
 app.use(json());
 
-app.get("/api/users/currentuser", (req, res) => {
-  res.send("Current user");
-});
+app.use(currentUserRouter);
+app.use(signinRouter);
+app.use(signoutRouter);
+app.use(signupRouter);
 
 app.listen(3000, () => {
   console.log("listening auth services on port 3000");
