@@ -11,6 +11,7 @@ import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
 import mongoose from "mongoose";
 
+const DATABASE_NAME = "auth";
 const app = express();
 app.use(json());
 
@@ -26,7 +27,9 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    await mongoose.connect("mongodb://auth-mongo-service:27017/auth");
+    await mongoose.connect(
+      `mongodb://auth-mongo-service:27017/${DATABASE_NAME}`
+    );
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error(error);
