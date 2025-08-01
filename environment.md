@@ -1,7 +1,7 @@
 # 🔒 JWT Secret Configuration (Confidential)
 
 > ⚠️ **CONFIDENTIAL FILE**  
-> Do not share this file or commit it to any public repository.
+> This file will not exposed to production or commit it to any public repository. Only for learning purpose
 
 ---
 
@@ -14,5 +14,5 @@ Create a Kubernetes secret for the JWT key used in authentication services (e.g.
 ## 🛠 Command to Create the Secret
 
 ```bash
-kubectl create secret generic jwt-secret --from-literal=jwt=asdf
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=roykacak
 ```
