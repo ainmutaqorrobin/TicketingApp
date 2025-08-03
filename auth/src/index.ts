@@ -1,45 +1,14 @@
-import express from "express";
-import "express-async-errors";
-import { json } from "body-parser";
-import {
-  currentUserRouter,
-  signinRouter,
-  signoutRouter,
-  signupRouter,
-} from "./routes";
-import { errorHandler } from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
 import mongoose from "mongoose";
-import cookieSession from "cookie-session";
+import { app } from "./app";
 
+const MONGO_SERVICE = "auth-mongo-service:27017";
 const DATABASE_NAME = "auth";
-const app = express();
-app.set("trust proxy", true);
-app.use(json());
-app.use(
-  cookieSession({
-    signed: false,
-    secure: true,
-  })
-);
-
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
-
-app.all("*", async (req, res, next) => {
-  throw new NotFoundError();
-});
-app.use(errorHandler);
 
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT_KEY is not defined");
 
   try {
-    await mongoose.connect(
-      `mongodb://auth-mongo-service:27017/${DATABASE_NAME}`
-    );
+    await mongoose.connect(`mongodb://${MONGO_SERVICE}/${DATABASE_NAME}`);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error(error);
