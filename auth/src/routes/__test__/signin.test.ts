@@ -1,12 +1,10 @@
 import request from "supertest";
 import { app } from "../../app";
-
-const SIGNIN_API = "/api/users/signin";
-const SIGNUP_API = "/api/users/signup";
+import { API } from "./const";
 
 it("fails when email does not exist", async () => {
   await request(app)
-    .post(SIGNIN_API)
+    .post(API.SIGN_IN)
     .send({
       email: "noemail",
       password: "password",
@@ -16,7 +14,7 @@ it("fails when email does not exist", async () => {
 
 it("fails when giving wrong password", async () => {
   await request(app)
-    .post(SIGNUP_API)
+    .post(API.SIGN_UP)
     .send({
       email: "email@test.com",
       password: "password",
@@ -24,14 +22,14 @@ it("fails when giving wrong password", async () => {
     .expect(201);
 
   await request(app)
-    .post(SIGNIN_API)
+    .post(API.SIGN_IN)
     .send({ email: "email@test.com", password: "incorrectpassword" })
     .expect(400);
 });
 
 it("response with cookie when success signin", async () => {
   await request(app)
-    .post(SIGNUP_API)
+    .post(API.SIGN_UP)
     .send({
       email: "email@test.com",
       password: "password",
@@ -39,7 +37,7 @@ it("response with cookie when success signin", async () => {
     .expect(201);
 
   const response = await request(app)
-    .post(SIGNIN_API)
+    .post(API.SIGN_IN)
     .send({
       email: "email@test.com",
       password: "password",
