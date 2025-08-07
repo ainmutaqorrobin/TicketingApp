@@ -3,16 +3,7 @@ import { app } from "../../app";
 import { API } from "./const";
 
 it("response with details about current user info", async () => {
-  const authResponse = await request(app)
-    .post(API.SIGN_UP)
-    .send({ email: "test@test.com", password: "password" })
-    .expect(201);
-
-  const cookie = authResponse.get("Set-Cookie");
-
-  if (!cookie) {
-    throw new Error("Cookie not set after signup");
-  }
+  const cookie = await getCookie();
   const response = await request(app)
     .get(API.CURRENT_USER)
     .set("Cookie", cookie)
@@ -20,4 +11,10 @@ it("response with details about current user info", async () => {
     .expect(200);
 
   expect(response.body.currentUser.email).toEqual("test@test.com");
+});
+
+it("response with null if not authenticated", async () => {
+  const response = await request(app).get(API.CURRENT_USER).send().expect(200);
+
+  expect(response.body.currentUser).toEqual(null);
 });
