@@ -1,10 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { API } from "../../const/api";
+import { useRequest } from "../../hooks/use-request";
 
 function signup() {
   const [formState, setFormState] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState([]);
+  const { doRequest, errors } = useRequest({
+    url: API.SIGN_UP,
+    method: "post",
+    body: formState,
+  });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -14,14 +19,7 @@ function signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(API.SIGN_UP, formState);
-
-      console.log(response.data);
-    } catch (err) {
-      console.log(err.response.data.errors);
-      setErrors(err.response.data.errors);
-    }
+    doRequest();
   };
 
   return (
@@ -46,16 +44,7 @@ function signup() {
           id="password"
         />
       </div>
-      {errors.length > 0 && (
-        <div className="alert alert-danger">
-          <h4>Ooops....</h4>
-          <ul className="my-0">
-            {errors.map((err) => (
-              <li key={err.message}>{err.message}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {errors}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
