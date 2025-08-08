@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { API } from "../../const/api";
 import { useRequest } from "../../hooks/use-request";
+import Router from "next/router";
 
 function signup() {
   const [formState, setFormState] = useState({ email: "", password: "" });
@@ -9,6 +9,7 @@ function signup() {
     url: API.SIGN_UP,
     method: "post",
     body: formState,
+    onSuccess: () => Router.push("/"),
   });
 
   const handleChange = (e) => {
@@ -19,7 +20,7 @@ function signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    doRequest();
+    await doRequest();
   };
 
   return (
