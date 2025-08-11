@@ -1,25 +1,18 @@
-import { API, INGRESS_URL } from "../const/api";
+import { getCurrentUser } from "../lib/get-current-user";
 import Banana from "./banana";
-import axios from "axios";
 
-function index({ isLoggedIn }) {
+function index({ isLoggedIn, user }) {
   console.log(isLoggedIn);
+  console.log(user);
   return <Banana />;
 }
 
 export const getServerSideProps = async ({ req }) => {
-  console.log(req.headers);
-  try {
-    const { data } = await axios.get(`${INGRESS_URL}${API.CURRENT_USER}`, {
-      headers: req.headers,
-    });
+  const { isLoggedIn, user } = await getCurrentUser(req.headers);
 
-    console.log(data);
-    return { props: { isLoggedIn: !!data.currentUser } };
-  } catch (error) {
-    console.log(error.message);
-    return { props: { isLoggedIn: false } };
-  }
+  return {
+    props: { isLoggedIn, user },
+  };
 };
 
 export default index;
