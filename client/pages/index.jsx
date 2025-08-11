@@ -1,15 +1,19 @@
 import { getCurrentUser } from "../lib/get-current-user";
+import Layout from "./layout";
 
-function index({ isLoggedIn, user }) {
-  return user ? <h1>You are signed in</h1> : <h1>You are not signed in</h1>;
+function HomePage({ user }) {
+  return (
+    <Layout currentUser={user}>
+      <h1>Home Page</h1>
+    </Layout>
+  );
 }
 
 export const getServerSideProps = async ({ req }) => {
-  const { isLoggedIn, user } = await getCurrentUser(req.headers);
-
+  const { user } = await getCurrentUser(req.headers);
   return {
-    props: { isLoggedIn, user },
+    props: { user },
   };
 };
 
-export default index;
+export default HomePage;
