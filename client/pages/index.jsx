@@ -1,10 +1,7 @@
 import { getCurrentUser } from "../lib/get-current-user";
-import Banana from "./banana";
 
 function index({ isLoggedIn, user }) {
-  console.log(isLoggedIn);
-  console.log(user);
-  return <Banana />;
+  return user ? <h1>You are signed in</h1> : <h1>You are not signed in</h1>;
 }
 
 export const getServerSideProps = async ({ req }) => {
