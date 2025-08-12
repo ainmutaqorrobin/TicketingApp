@@ -2,6 +2,7 @@ export const API = {
   SIGN_UP: "/api/users/signup",
   CURRENT_USER: "/api/users/currentuser",
   SIGN_IN: "/api/users/signin",
+  SIGN_OUT: "/api/users/signout",
 };
 
 // This is the URL for the ingress controller in a Kubernetes cluster.
