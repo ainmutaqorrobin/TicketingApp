@@ -7,9 +7,8 @@ import {
   signoutRouter,
   signupRouter,
 } from "./routes";
-import { errorHandler } from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
 import cookieSession from "cookie-session";
+import { NotFoundError, errorHandler } from "@robin_project/common";
 
 const app = express();
 app.set("trust proxy", true);
