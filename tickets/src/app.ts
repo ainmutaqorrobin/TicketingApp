@@ -2,7 +2,12 @@ import express from "express";
 import "express-async-errors";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
-import { NotFoundError, errorHandler } from "@robin_project/common";
+import {
+  NotFoundError,
+  currentUser,
+  errorHandler,
+} from "@robin_project/common";
+import { CreateTicketRouter } from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -14,6 +19,9 @@ app.use(
   })
 );
 
+app.use(currentUser);
+
+app.use(CreateTicketRouter);
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();
 });
