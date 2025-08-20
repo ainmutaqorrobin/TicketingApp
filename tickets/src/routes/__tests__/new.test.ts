@@ -1,8 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
-
-const API = "/api/tickets";
+import { API } from "../const";
 
 it("has a route handler listening to /api/tickets for post request", async () => {
   const response = await request(app).post(API).send({});
