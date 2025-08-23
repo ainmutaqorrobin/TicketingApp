@@ -1,5 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { connect, connection } from "mongoose";
+import { connect, connection, Types } from "mongoose";
 import { sign } from "jsonwebtoken";
 
 declare global {
@@ -34,7 +34,7 @@ afterAll(async () => {
 global.getCookie = () => {
   //Build a JWT payload {id, email}
   const payload = {
-    id: "12345",
+    id: new Types.ObjectId().toHexString(),
     email: "fake@test.com",
   };
 
