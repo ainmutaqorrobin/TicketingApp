@@ -1,2 +1,9 @@
-export { default as CreateTicketRouter } from "./new";
-export { default as ShowTicketRouter } from "./show";
+import CreateTicketRouter from "./new";
+import ShowTicketRouter from "./show";
+import ListingTicketRouter from "./listing";
+
+export const routes = [
+  CreateTicketRouter,
+  ShowTicketRouter,
+  ListingTicketRouter,
+];
