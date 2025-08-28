@@ -14,10 +14,17 @@ stan.on("connect", () => {
     process.exit();
   });
 
-  const options = stan.subscriptionOptions().setManualAckMode(true);
+  const options = stan
+    .subscriptionOptions()
+    .setManualAckMode(true)
+    //get all messages in the channel (even the old ones)
+    .setDeliverAllAvailable()
+    //remember the last message we have seen and start from there if we restart
+    .setDurableName("orders-service");
 
   const subscription = stan.subscribe(
     "ticket:created",
+    //load balance the messages between multiple instances of the same service
     "queue-group-name",
     options
   );
