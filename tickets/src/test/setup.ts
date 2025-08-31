@@ -18,6 +18,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   if (connection.db) {
     const collections = await connection.db.collections();
 

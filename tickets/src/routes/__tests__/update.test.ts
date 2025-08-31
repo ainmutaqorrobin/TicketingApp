@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "../../app";
 import { API } from "../const";
 import { Types } from "mongoose";
+import { natsWrapper } from "../../nats-wrapper";
 
 const createTicket = (cookie?: string[]) => {
   return request(app)
@@ -80,4 +81,17 @@ it("updates the ticket provided valid inputs", async () => {
 
   expect(fetchedTicketResponse.body.title).toEqual("updated title");
   expect(fetchedTicketResponse.body.price).toEqual(100);
+});
+
+it("publish an event", async () => {
+  const cookie = global.getCookie(); //to indicate the same user
+  const createdTicketResponse = await createTicket(cookie);
+
+  await request(app)
+    .put(`${API}/${createdTicketResponse.body.id}`)
+    .set("Cookie", cookie)
+    .send({ title: "updated title", price: 100 })
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
