@@ -7,6 +7,7 @@ import {
   currentUser,
   errorHandler,
 } from "@robin_project/common";
+import { routes } from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -19,6 +20,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+routes.forEach((router) => app.use(router));
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();
