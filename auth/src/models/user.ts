@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 import { Password } from "../util/password";
 
 interface UserAttrs {
@@ -49,6 +49,6 @@ userSchema.pre("save", async function (done) {
 
 userSchema.statics.build = (attrs: UserAttrs) => new User(attrs);
 
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
+const User = model<UserDoc, UserModel>("User", userSchema);
 
 export { User };

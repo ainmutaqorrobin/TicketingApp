@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 
 interface TicketAttrs {
   title: string;
@@ -44,6 +44,6 @@ const ticketSchema = new Schema(
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => new Ticket(attrs);
 
-const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", ticketSchema);
+const Ticket = model<TicketDoc, TicketModel>("Ticket", ticketSchema);
 
 export { Ticket };
