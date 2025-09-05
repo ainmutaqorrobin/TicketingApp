@@ -1,11 +1,8 @@
 # 🌐 Kubernetes Environment Setup
 
-This document contains setup instructions for configuring Kubernetes resources for **learning purposes**.  
-⚠️ Do **NOT** commit this file to any public repository or expose it in production.
-
 ---
 
-# 🔒 JWT Secret Configuration (Confidential)
+## 🔒 JWT Secret Configuration (Confidential)
 
 > ⚠️ **CONFIDENTIAL FILE**  
 > This section contains sensitive information.  
