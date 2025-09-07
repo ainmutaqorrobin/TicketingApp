@@ -2,16 +2,7 @@ import request from "supertest";
 import { Ticket } from "../../models/ticket";
 import { app } from "../../app";
 import { API } from "../const";
-
-const createTicket = async () => {
-  const ticket = Ticket.build({
-    price: 20,
-    title: "concert",
-  });
-
-  await ticket.save();
-  return ticket;
-};
+import { createTicket } from "../../test/setup";
 
 it("fetches the order", async () => {
   const ticket = await createTicket();

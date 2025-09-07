@@ -5,16 +5,8 @@ import { API } from "../const";
 import { Ticket } from "../../models/ticket";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@robin_project/common";
+import { createTicket } from "../../test/setup";
 
-const createTicket = async () => {
-  const ticket = Ticket.build({
-    price: 20,
-    title: "concert",
-  });
-
-  await ticket.save();
-  return ticket;
-};
 
 it("returns an error if the ticket is not found", async () => {
   const ticketId = new Types.ObjectId();

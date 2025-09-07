@@ -1,12 +1,24 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { connect, connection, Types } from "mongoose";
 import { sign } from "jsonwebtoken";
+import { Ticket } from "../models/ticket";
+
+jest.mock("../nats-wrapper");
 
 declare global {
   var getCookie: () => string[];
 }
 
-jest.mock("../nats-wrapper");
+export const createTicket = async () => {
+  const ticket = Ticket.build({
+    price: 20,
+    title: "concert",
+  });
+
+  await ticket.save();
+  return ticket;
+};
+
 
 let mongo: any;
 beforeAll(async () => {
