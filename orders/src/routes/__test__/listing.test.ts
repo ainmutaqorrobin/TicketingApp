@@ -4,16 +4,14 @@ import { API } from "../const";
 import { app } from "../../app";
 import { createTicket } from "../../test/setup";
 
-
-
 it("fetches orders for an particular user", async () => {
   // Create three tickets
   const ticketOne = await createTicket();
   const ticketTwo = await createTicket();
   const ticketThree = await createTicket();
 
-  const userOne = global.getCookie();
-  const userTwo = global.getCookie();
+  const userOne = getCookie();
+  const userTwo = getCookie();
   // Create one order as User #1
   await request(app)
     .post(API)

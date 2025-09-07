@@ -7,13 +7,12 @@ import { Order } from "../../models/order";
 import { OrderStatus } from "@robin_project/common";
 import { createTicket } from "../../test/setup";
 
-
 it("returns an error if the ticket is not found", async () => {
   const ticketId = new Types.ObjectId();
 
   await request(app)
     .post(API)
-    .set("Cookie", global.getCookie())
+    .set("Cookie", getCookie())
     .send({ ticketId })
     .expect(404);
 });
@@ -31,7 +30,7 @@ it("returns an error if the ticket is already reserved", async () => {
 
   await request(app)
     .post(API)
-    .set("Cookie", global.getCookie())
+    .set("Cookie", getCookie())
     .send({ ticketId: ticket.id })
     .expect(400);
 });
@@ -41,9 +40,9 @@ it("reserves a ticket", async () => {
 
   await request(app)
     .post(API)
-    .set("Cookie", global.getCookie())
+    .set("Cookie", getCookie())
     .send({ ticketId: ticket.id })
     .expect(201);
 });
 
-it.todo("emits an order created event")
+it.todo("emits an order created event");
