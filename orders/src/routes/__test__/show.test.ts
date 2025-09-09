@@ -1,5 +1,4 @@
 import request from "supertest";
-import { Ticket } from "../../models/ticket";
 import { app } from "../../app";
 import { API } from "../const";
 import { createTicket } from "../../test/setup";

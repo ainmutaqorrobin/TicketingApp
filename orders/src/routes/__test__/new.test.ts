@@ -2,10 +2,10 @@ import request from "supertest";
 import { app } from "../../app";
 import { Types } from "mongoose";
 import { API } from "../const";
-import { Ticket } from "../../models/ticket";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@robin_project/common";
 import { createTicket } from "../../test/setup";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("returns an error if the ticket is not found", async () => {
   const ticketId = new Types.ObjectId();
@@ -45,4 +45,14 @@ it("reserves a ticket", async () => {
     .expect(201);
 });
 
-it.todo("emits an order created event");
+it("emits an order created event", async () => {
+  const ticket = await createTicket();
+
+  await request(app)
+    .post(API)
+    .set("Cookie", getCookie())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
