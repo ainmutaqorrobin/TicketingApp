@@ -10,7 +10,9 @@ declare global {
 }
 
 export const createTicket = async () => {
+  const id = new Types.ObjectId().toHexString();
   const ticket = Ticket.build({
+    id: id,
     price: 20,
     title: "concert",
   });
@@ -18,7 +20,6 @@ export const createTicket = async () => {
   await ticket.save();
   return ticket;
 };
-
 
 let mongo: any;
 beforeAll(async () => {
