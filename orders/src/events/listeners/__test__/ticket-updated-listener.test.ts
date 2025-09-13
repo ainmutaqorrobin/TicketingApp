@@ -53,3 +53,16 @@ it("acknowledge the message", async () => {
 
   expect(msg.ack).toHaveBeenCalled();
 });
+
+it("does not acknowledge if the event has a 2 or more step version ahead", async () => {
+  const { data, listener, msg } = await listenerSetup();
+
+  //simulating other version
+  data.version = 10;
+
+  try {
+    await listener.onMessage(data, msg as Message);
+  } catch (error) {}
+
+  expect(msg.ack).not.toHaveBeenCalled();
+});
