@@ -9,6 +9,10 @@ interface TicketAttrs {
   price: number;
 }
 
+interface TicketEvent {
+  id: string;
+  version: number;
+}
 export interface TicketDoc extends Document {
   title: string;
   price: number;
@@ -18,6 +22,7 @@ export interface TicketDoc extends Document {
 
 interface TicketModel extends Model<TicketDoc> {
   build: (attrs: TicketAttrs) => TicketDoc;
+  findByEvent(event: TicketEvent): Promise<TicketDoc | null>;
 }
 
 const ticketSchema = new Schema(
@@ -52,6 +57,16 @@ ticketSchema.statics.build = (attrs: TicketAttrs) =>
     title: attrs.title,
     price: attrs.price,
   });
+
+ticketSchema.statics.findByEvent = (event: TicketEvent) => {
+  /* version - 1 to prevent concurrent issues where incoming
+      event could be 2 step ahead from previous one */
+
+  return Ticket.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
+};
 
 ticketSchema.methods.isReserved = async function () {
   const existedOrder = await Order.findOne({
