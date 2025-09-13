@@ -5,7 +5,7 @@ import { Types } from "mongoose";
 import { Message } from "node-nats-streaming";
 import { Ticket } from "../../../models/ticket";
 
-const setup = async () => {
+const listenerSetup = async () => {
   //create an instance of listener
   const listener = new TicketCreatedListener(natsWrapper.client);
 
@@ -27,7 +27,7 @@ const setup = async () => {
 };
 
 it("creates and saves a ticket", async () => {
-  const { data, listener, msg } = await setup();
+  const { data, listener, msg } = await listenerSetup();
 
   //call onMessage function with data object + message object
   await listener.onMessage(data, msg as Message);
@@ -41,7 +41,7 @@ it("creates and saves a ticket", async () => {
 });
 
 it("acknowledge the message", async () => {
-  const { data, listener, msg } = await setup();
+  const { data, listener, msg } = await listenerSetup();
 
   //call onMessage function with data object + message object
   await listener.onMessage(data, msg as Message);
