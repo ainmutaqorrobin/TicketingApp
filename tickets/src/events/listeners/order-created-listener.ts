@@ -14,7 +14,7 @@ export class OrderCreatedListeners extends Listener<OrderCreatedEvent> {
   readonly queueGroupName: string = QUEUE_GROUP_NAME;
 
   async onMessage(data: OrderCreatedEvent["data"], msg: Message) {
-    const ticket = await Ticket.findById({ ticketId: data.ticket.id });
+    const ticket = await Ticket.findById(data.ticket.id);
 
     if (!ticket) throw new Error("Ticket not found");
 
