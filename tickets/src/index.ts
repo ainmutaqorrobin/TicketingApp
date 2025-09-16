@@ -1,6 +1,8 @@
 import { connect } from "mongoose";
 import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { OrderCreatedListeners } from "./events/listeners/order-created-listener";
 
 const start = async () => {
   if (!process.env.JWT_KEY) throw new Error("JWT_KEY is not defined");
@@ -21,12 +23,18 @@ const start = async () => {
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
+
     natsWrapper.client.on("close", () => {
       console.log("NATS connection closed");
       process.exit();
     });
+
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
+
+    new OrderCreatedListeners(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
+
     await connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
   } catch (error) {
