@@ -3,6 +3,7 @@ import { app } from "../../app";
 import { API } from "../const";
 import { Types } from "mongoose";
 import { natsWrapper } from "../../nats-wrapper";
+import { Ticket } from "../../models/ticket";
 
 const createTicket = (cookie?: string[]) => {
   return request(app)
@@ -94,4 +95,20 @@ it("publish an event", async () => {
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it("reject update if the ticket is reserved", async () => {
+  const cookie = global.getCookie(); //to indicate the same user
+  const createdTicketResponse = await createTicket(cookie);
+
+  const ticket = await Ticket.findById(createdTicketResponse.body.id);
+
+  ticket!.set({ orderId: new Types.ObjectId().toHexString() });
+  await ticket!.save();
+
+  await request(app)
+    .put(`${API}/${createdTicketResponse.body.id}`)
+    .set("Cookie", cookie)
+    .send({ title: "updated title", price: 100 })
+    .expect(400);
 });
