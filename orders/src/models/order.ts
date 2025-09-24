@@ -18,7 +18,7 @@ interface OrderDoc extends Document {
   version: number;
 }
 
-interface UserModel extends Model<OrderDoc> {
+interface OrderModel extends Model<OrderDoc> {
   build: (attrs: OrderAttrs) => OrderDoc;
 }
 
@@ -58,6 +58,6 @@ orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => new Order(attrs);
 
-const Order = model<OrderDoc, UserModel>("Order", orderSchema);
+const Order = model<OrderDoc, OrderModel>("Order", orderSchema);
 
 export { Order };
