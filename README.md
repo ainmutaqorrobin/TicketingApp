@@ -24,7 +24,7 @@ This project is inspired by real-world event-ticketing platforms and demonstrate
 
 ## 🏗️ Architecture
 
-![Ticketing Architecture](./ticketing_architecture.png)
+![Ticketing Architecture](./docs/ticketing_architecture.png)
 
 ## 🚀 Getting Started
 
