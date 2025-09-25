@@ -1,4 +1,3 @@
-
 # 🎟️ Ticketing App – Microservices Project
 
 A **microservices-based ticketing system** built with **Node.js, TypeScript, NATS Streaming, Docker, Kubernetes, and MongoDB**.  
@@ -49,7 +48,9 @@ This project is inspired by real-world event-ticketing platforms and demonstrate
 ## 🚀 Getting Started
 
 ### 1️⃣ Prerequisites
+
 Make sure you have:
+
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - [Kubernetes](https://kubernetes.io/) (via Docker Desktop, minikube, or k3d)
@@ -121,6 +122,7 @@ npm test
 \`\`\`
 
 Tests cover:
+
 - Model validations
 - Event publishing
 - Listener acknowledgment (\`msg.ack()\`)
@@ -144,7 +146,7 @@ CMD ["npm", "start"]
 \`\`\`
 
 👉 We \`COPY package.json\` first to optimize Docker build caching  
-👉 Then copy the rest of the source code  
+👉 Then copy the rest of the source code
 
 ---
 
@@ -152,9 +154,10 @@ CMD ["npm", "start"]
 
 - **NATS Event Handling**  
   Every listener receives:
+
   - \`data\`: event payload
   - \`msg\`: message object with \`ack()\`  
-  We manually create \`msg\` in tests to mock \`ack()\` and assert correct handling.
+    We manually create \`msg\` in tests to mock \`ack()\` and assert correct handling.
 
 - **Expiration Service**  
   Uses **asynchronous order creation events**. If order expires, it emits an event → \`OrderCancelled\` → updates across services.
@@ -164,12 +167,3 @@ CMD ["npm", "start"]
 
 - **Common Module**  
   Shared logic (errors, middlewares, event definitions) is extracted into \`@ticketing/common\`.
-
----
-
-## 🔮 Roadmap
-
-- [ ] Add CI/CD with GitHub Actions  
-- [ ] Deploy to cloud (GCP/AWS)  
-- [ ] Add frontend client with Next.js  
-- [ ] Implement payments with Stripe  
