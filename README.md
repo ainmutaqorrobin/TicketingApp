@@ -24,26 +24,7 @@ This project is inspired by real-world event-ticketing platforms and demonstrate
 
 ## 🏗️ Architecture
 
-```plaintext
-          +-------------+         +------------+
-          |   Client    | <-----> |   Ingress  |
-          +-------------+         +------------+
-                 |                       |
-      +----------+----------+------------+-------------+
-      |                     |                          |
-+------------+       +-------------+           +--------------+
-|  Auth Svc  |       |  Tickets    |           |   Orders     |
-+------------+       +-------------+           +--------------+
-                          |                           |
-                          v                           v
-                   +-------------+             +--------------+
-                   | Expiration  |             |  Payments    |
-                   +-------------+             +--------------+
-
-               <--- Event Bus (NATS Streaming) --->
-```
-
----
+![Ticketing Architecture](./ticketing_architecture.png)
 
 ## 🚀 Getting Started
 
