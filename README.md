@@ -44,17 +44,17 @@ Make sure you have:
 
 Clone repository:
 
-\`\`\`bash
+```bash
 git clone https://github.com/<your-username>/ticketing-app.git
 cd ticketing-app
-\`\`\`
+```
 
 Install dependencies for each service (example for **tickets service**):
 
-\`\`\`bash
+```bash
 cd tickets
 npm install
-\`\`\`
+```
 
 ---
 
@@ -62,10 +62,10 @@ npm install
 
 Build and run a service (example: tickets):
 
-\`\`\`bash
+```bash
 docker build -t your-dockerhub-username/tickets .
 docker run -p 3000:3000 your-dockerhub-username/tickets
-\`\`\`
+```
 
 ---
 
@@ -73,21 +73,21 @@ docker run -p 3000:3000 your-dockerhub-username/tickets
 
 Deploy services:
 
-\`\`\`bash
+```bash
 kubectl apply -f infra/k8s
-\`\`\`
+```
 
 Check pods:
 
-\`\`\`bash
+```bash
 kubectl get pods
-\`\`\`
+```
 
 Exec into Mongo pod:
 
-\`\`\`bash
+```bash
 kubectl exec -it orders-mongo-deployment-XXXXX -- mongo
-\`\`\`
+```
 
 ---
 
@@ -97,16 +97,16 @@ Each service has **unit tests** with Jest.
 
 Example (Tickets service):
 
-\`\`\`bash
+```bash
 cd tickets
 npm test
-\`\`\`
+```
 
 Tests cover:
 
 - Model validations
 - Event publishing
-- Listener acknowledgment (\`msg.ack()\`)
+- Listener acknowledgment (`msg.ack()`)
 - Service-to-service integration
 
 ---
@@ -115,7 +115,7 @@ Tests cover:
 
 All services follow a similar structure:
 
-\`\`\`dockerfile
+```dockerfile
 FROM node:alpine
 
 WORKDIR /app
@@ -124,9 +124,9 @@ RUN npm install --omit=dev
 COPY . .
 
 CMD ["npm", "start"]
-\`\`\`
+```
 
-👉 We \`COPY package.json\` first to optimize Docker build caching  
+👉 We `COPY package.json` first to optimize Docker build caching  
 👉 Then copy the rest of the source code
 
 ---
@@ -136,15 +136,15 @@ CMD ["npm", "start"]
 - **NATS Event Handling**  
   Every listener receives:
 
-  - \`data\`: event payload
-  - \`msg\`: message object with \`ack()\`  
-    We manually create \`msg\` in tests to mock \`ack()\` and assert correct handling.
+  - `data`: event payload
+  - `msg`: message object with `ack()`  
+    We manually create `msg` in tests to mock `ack()` and assert correct handling.
 
 - **Expiration Service**  
-  Uses **asynchronous order creation events**. If order expires, it emits an event → \`OrderCancelled\` → updates across services.
+  Uses **asynchronous order creation events**. If order expires, it emits an event → `OrderCancelled` → updates across services.
 
 - **Versioning**  
-  Uses \`mongoose-update-if-current\` plugin for optimistic concurrency control (OCC).
+  Uses `mongoose-update-if-current` plugin for optimistic concurrency control (OCC).
 
 - **Common Module**  
-  Shared logic (errors, middlewares, event definitions) is extracted into \`@ticketing/common\`.
+  Shared logic (errors, middlewares, event definitions) is extracted into `@ticketing/common`.
