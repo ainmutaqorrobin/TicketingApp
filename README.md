@@ -147,4 +147,6 @@ CMD ["npm", "start"]
   Uses `mongoose-update-if-current` plugin for optimistic concurrency control (OCC).
 
 - **Common Module**  
-  Shared logic (errors, middlewares, event definitions) is extracted into `@ticketing/common`.
+  Shared logic (errors, middlewares, event definitions) is extracted into  
+  [`@robin_project/common`](https://www.npmjs.com/package/@robin_project/common).
+
