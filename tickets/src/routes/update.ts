@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { Ticket } from "../models/ticket";
 import { API } from "./const";
 import {
@@ -12,7 +12,7 @@ import { body } from "express-validator";
 import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
 import { natsWrapper } from "../nats-wrapper";
 
-const router = express.Router();
+const router = Router();
 
 router.put(
   `${API}/:id`,
@@ -51,4 +51,4 @@ router.put(
   }
 );
 
-export default router;
+export { router as UpdateTicketRouter };

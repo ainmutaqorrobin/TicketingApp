@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { Ticket } from "../models/ticket";
 import { NotFoundError } from "@robin_project/common";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/api/tickets/:id", async (req: Request, res: Response) => {
   const ticket = await Ticket.findById(req.params.id);
@@ -12,4 +12,4 @@ router.get("/api/tickets/:id", async (req: Request, res: Response) => {
   res.send(ticket);
 });
 
-export default router;
+export { router as ShowTicketRouter };
