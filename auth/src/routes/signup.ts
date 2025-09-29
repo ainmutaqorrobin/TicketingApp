@@ -1,9 +1,9 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { User } from "../models/user";
 import jwt from "jsonwebtoken";
 import { validateRequest, BadRequestError } from "@robin_project/common";
-const router = express.Router();
+const router = Router();
 
 router.post(
   "/api/users/signup",
@@ -44,4 +44,4 @@ router.post(
   }
 );
 
-export default router;
+export { router as SignUpRouter };

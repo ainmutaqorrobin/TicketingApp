@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { User } from "../models/user";
 import { Password } from "../util/password";
 import jwt from "jsonwebtoken";
 import { BadRequestError, validateRequest } from "@robin_project/common";
 
-const router = express.Router();
+const router = Router();
 
 router.post(
   "/api/users/signin",
@@ -44,4 +44,4 @@ router.post(
   }
 );
 
-export default router;
+export { router as SignInRouter };

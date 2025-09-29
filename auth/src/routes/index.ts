@@ -1,4 +1,11 @@
-export { default as currentUserRouter } from "./current-user";
-export { default as signinRouter } from "./signin";
-export { default as signoutRouter } from "./signout";
-export { default as signupRouter } from "./signup";
+import { CurrentUserRouter } from "./current-user";
+import { SignInRouter } from "./signin";
+import { SignOutRouter } from "./signout";
+import { SignUpRouter } from "./signup";
+
+export const routes = [
+  CurrentUserRouter,
+  SignInRouter,
+  SignOutRouter,
+  SignUpRouter,
+];

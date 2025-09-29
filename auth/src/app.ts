@@ -1,14 +1,9 @@
 import express from "express";
 import "express-async-errors";
 import { json } from "body-parser";
-import {
-  currentUserRouter,
-  signinRouter,
-  signoutRouter,
-  signupRouter,
-} from "./routes";
 import cookieSession from "cookie-session";
 import { NotFoundError, errorHandler } from "@robin_project/common";
+import { routes } from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -20,10 +15,7 @@ app.use(
   })
 );
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+routes.forEach((router) => app.use(router));
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();
