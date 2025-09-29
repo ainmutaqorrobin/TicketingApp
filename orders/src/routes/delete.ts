@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { API } from "./const";
 import {
   NotAuthorizedError,
@@ -10,7 +10,7 @@ import { Order } from "../models/order";
 import { OrderCancelledPublisher } from "../events/publishers/order-cancelled-publisher ";
 import { natsWrapper } from "../nats-wrapper";
 
-const router = express.Router();
+const router = Router();
 
 router.delete(
   `${API}/:orderId`,
@@ -39,4 +39,4 @@ router.delete(
   }
 );
 
-export default router;
+export { router as DeleteOrderRouter };

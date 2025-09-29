@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { API } from "./const";
 import {
   NotAuthorizedError,
@@ -7,7 +7,7 @@ import {
 } from "@robin_project/common";
 import { Order } from "../models/order";
 
-const router = express.Router();
+const router = Router();
 
 router.get(
   `${API}/:orderId`,
@@ -17,9 +17,9 @@ router.get(
 
     if (!order) throw new NotFoundError();
     if (order.userId !== req.currentUser!.id) throw new NotAuthorizedError();
-    
+
     res.send(order);
   }
 );
 
-export default router;
+export { router as ShowOrderRouter };

@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { API } from "./const";
 import { requireAuth } from "@robin_project/common";
 import { Order } from "../models/order";
-const router = express.Router();
+const router = Router();
 
 router.get(API, requireAuth, async (req: Request, res: Response) => {
   const orders = await Order.find({
@@ -12,4 +12,4 @@ router.get(API, requireAuth, async (req: Request, res: Response) => {
   res.send(orders);
 });
 
-export default router;
+export { router as ListingOrderRouter };

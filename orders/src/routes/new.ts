@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { API, EXPIRATION_WINDOW_SECONDS } from "./const";
 import {
   BadRequestError,
@@ -14,7 +14,7 @@ import { Order } from "../models/order";
 import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 import { natsWrapper } from "../nats-wrapper";
 
-const router = express.Router();
+const router = Router();
 
 router.post(
   API,
@@ -70,4 +70,4 @@ router.post(
   }
 );
 
-export default router;
+export { router as CreateOrderRouter };

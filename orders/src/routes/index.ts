@@ -1,7 +1,7 @@
-import CreateOrderRouter from "./new";
-import ShowOrderRouter from "./show";
-import ListingOrderRouter from "./listing";
-import DeleteOrderRouter from "./delete";
+import { DeleteOrderRouter } from "./delete";
+import { ListingOrderRouter } from "./listing";
+import { CreateOrderRouter } from "./new";
+import { ShowOrderRouter } from "./show";
 
 export const routes = [
   CreateOrderRouter,
