@@ -58,7 +58,20 @@ npm install
 
 ---
 
-### 3️⃣ Running with Docker
+### 3️⃣ Setup Environment
+Before running the project, make sure you have configured all required environment variables and Kubernetes secrets.  
+👉 Follow the instructions here: [Environment Setup](./environment.md)
+
+### 4️⃣ Install Ingress-NGINX Controller
+Install the ingress controller (required for routing requests):
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.13.2/deploy/static/provider/cloud/deploy.yaml
+```
+---
+
+
+### 5️⃣ Running with Docker
 
 Build and run a service (example: tickets):
 
@@ -69,7 +82,7 @@ docker run -p 3000:3000 your-dockerhub-username/tickets
 
 ---
 
-### 4️⃣ Running with Kubernetes
+### 6️⃣ Running with Kubernetes
 
 Deploy services:
 
