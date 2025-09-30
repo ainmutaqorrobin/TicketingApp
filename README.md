@@ -60,7 +60,7 @@ npm install
 
 ### 3️⃣ Setup Environment
 Before running the project, make sure you have configured all required environment variables and Kubernetes secrets.  
-👉 Follow the instructions here: [Environment Setup](./environment.md)
+👉 Follow the instructions here: [Environment Setup](./docs/environment.md)
 
 ### 4️⃣ Install Ingress-NGINX Controller
 Install the ingress controller (required for routing requests):
