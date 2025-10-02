@@ -33,18 +33,18 @@ router.post(
       throw new BadRequestError("Cannot pay for cancelled order");
 
     // DEPRECATED
-    // await stripe.charges.create({
-    //   currency: "usd",
-    //   amount: order.price * 100,
-    //   source: token,
-    // });
-
-    await stripe.paymentIntents.create({
+    await stripe.charges.create({
       currency: "usd",
       amount: order.price * 100,
-      payment_method: token,
-      confirm: true,
+      source: token,
     });
+
+    // await stripe.paymentIntents.create({
+    //   currency: "usd",
+    //   amount: order.price * 100,
+    //   payment_method: token,
+    //   confirm: true,
+    // });
 
     return res.send({ success: true });
   }
