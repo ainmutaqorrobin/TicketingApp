@@ -10,6 +10,7 @@ import {
 } from "@robin_project/common";
 import { body } from "express-validator";
 import { Order } from "../models/order";
+import { stripe } from "../stripe";
 
 const router = Router();
 
@@ -30,6 +31,20 @@ router.post(
     if (order.userId !== req.currentUser!.id) throw new NotAuthorizedError();
     if (order.status === OrderStatus.Cancelled)
       throw new BadRequestError("Cannot pay for cancelled order");
+
+    // DEPRECATED
+    // await stripe.charges.create({
+    //   currency: "usd",
+    //   amount: order.price * 100,
+    //   source: token,
+    // });
+
+    await stripe.paymentIntents.create({
+      currency: "usd",
+      amount: order.price * 100,
+      payment_method: token,
+      confirm: true,
+    });
 
     return res.send({ success: true });
   }
