@@ -46,7 +46,7 @@ router.post(
     //   confirm: true,
     // });
 
-    return res.send({ success: true });
+    return res.status(201).send({ success: true });
   }
 );
 
