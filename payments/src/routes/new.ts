@@ -11,6 +11,7 @@ import {
 import { body } from "express-validator";
 import { Order } from "../models/order";
 import { stripe } from "../stripe";
+import { Payment } from "../models/payment";
 
 const router = Router();
 
@@ -33,12 +34,15 @@ router.post(
       throw new BadRequestError("Cannot pay for cancelled order");
 
     // DEPRECATED
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: "usd",
       amount: order.price * 100,
       source: token,
     });
 
+    const payment = Payment.build({ orderId, stripeId: charge.id });
+    await payment.save();
+    
     // await stripe.paymentIntents.create({
     //   currency: "usd",
     //   amount: order.price * 100,
