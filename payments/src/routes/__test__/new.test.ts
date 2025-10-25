@@ -5,6 +5,7 @@ import { Types } from "mongoose";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@robin_project/common";
 import { stripe } from "../../stripe";
+import { Payment } from "../../models/payment";
 
 jest.mock("../../stripe");
 
@@ -67,12 +68,40 @@ it("returns a 201 with valid inputs", async () => {
   });
 
   await order.save();
+
   await request(app)
     .post(API)
     .set("Cookie", getCookie(userId))
     .send({
-      token: "tok_visa",
+      token: "pm_card_visa",
       orderId: order.id,
     })
     .expect(201);
+
+  const createMock = stripe.paymentIntents.create as jest.Mock;
+  const lastCallArgs = createMock.mock.calls[0][0]; // first argument of first call
+  const createdAmount = lastCallArgs.amount;
+  const stripeId = lastCallArgs.id;
+
+  (stripe.paymentIntents.list as jest.Mock).mockResolvedValueOnce({
+    data: [
+      {
+        id: "pi_mock_123",
+        amount: createdAmount,
+        currency: "usd",
+        status: "succeeded",
+      },
+    ],
+  });
+
+  const stripeCharges = await stripe.paymentIntents.list({ limit: 50 });
+  const stripeCharge = stripeCharges.data.find(
+    (charge) => charge.amount === price * 100
+  );
+  expect(stripeCharge).toBeDefined();
+  expect(stripeCharge!.currency).toEqual("usd");
+
+  const payment = await Payment.findOne({ orderId: order.id });
+
+  expect(payment).not.toBeNull();
 });

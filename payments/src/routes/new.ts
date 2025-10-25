@@ -44,8 +44,6 @@ router.post(
       },
     });
 
-    console.log(paymentIntent);
-
     const payment = Payment.build({
       orderId,
       stripeId: paymentIntent.id,
