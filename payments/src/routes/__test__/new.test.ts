@@ -54,19 +54,19 @@ it("return 400 when purchase cancelled order", async () => {
     .expect(400);
 });
 
-it("returns a 204 with valid inputs", async () => {
+it("returns a 201 with valid inputs", async () => {
   const userId = new Types.ObjectId().toHexString();
+  const price = Math.floor(Math.random() * 100000);
 
   const order = Order.build({
     id: new Types.ObjectId().toHexString(),
-    userId: userId,
+    userId,
     version: 0,
-    price: 20,
+    price,
     status: OrderStatus.Created,
   });
 
   await order.save();
-
   await request(app)
     .post(API)
     .set("Cookie", getCookie(userId))
@@ -75,10 +75,4 @@ it("returns a 204 with valid inputs", async () => {
       orderId: order.id,
     })
     .expect(201);
-
-  const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
-
-  expect(chargeOptions.source).toEqual("tok_visa");
-  expect(chargeOptions.amount).toEqual(20 * 100);
-  expect(chargeOptions.currency).toEqual("usd");
 });

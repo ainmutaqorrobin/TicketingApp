@@ -33,24 +33,31 @@ router.post(
     if (order.status === OrderStatus.Cancelled)
       throw new BadRequestError("Cannot pay for cancelled order");
 
-    // DEPRECATED
-    const charge = await stripe.charges.create({
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: order.price * 100, // Stripe uses cents
       currency: "usd",
-      amount: order.price * 100,
-      source: token,
+      payment_method: token, // token from client
+      confirm: true, // confirm the payment immediately,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: "never",
+      },
     });
 
-    const payment = Payment.build({ orderId, stripeId: charge.id });
-    await payment.save();
-    
-    // await stripe.paymentIntents.create({
-    //   currency: "usd",
-    //   amount: order.price * 100,
-    //   payment_method: token,
-    //   confirm: true,
-    // });
+    console.log(paymentIntent);
 
-    return res.status(201).send({ success: true });
+    const payment = Payment.build({
+      orderId,
+      stripeId: paymentIntent.id,
+    });
+    await payment.save();
+
+    return res.status(201).send({
+      success: true,
+      id: payment.id,
+      stripeId: paymentIntent.id,
+      status: paymentIntent.status,
+    });
   }
 );
 
