@@ -1,12 +1,7 @@
 import { getCurrentUser } from "../lib/get-current-user";
-import Layout from "./layout";
 
 function HomePage() {
-  return (
-    <Layout>
-      <h1>Home Page</h1>
-    </Layout>
-  );
+  return <h1>Home Page</h1>;
 }
 
 export const getServerSideProps = async ({ req }) => {
