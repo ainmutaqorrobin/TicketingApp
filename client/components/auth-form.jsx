@@ -2,14 +2,23 @@ import Router from "next/router";
 import { useState } from "react";
 import { useRequest } from "../hooks/use-request";
 import { API } from "../const/api";
+import { useUserState } from "../context/user-context";
 
 function AuthForm({ isLogin = false }) {
+  const { setCurrentUser } = useUserState();
   const [formState, setFormState] = useState({ email: "", password: "" });
+  
   const { doRequest, errors } = useRequest({
     url: isLogin ? API.SIGN_IN : API.SIGN_UP,
     method: "post",
     body: formState,
-    onSuccess: () => Router.push("/"),
+    onSuccess: async (data) => {
+      const res = await fetch(API.CURRENT_USER);
+      const { currentUser } = await res.json();
+      setCurrentUser(currentUser);
+
+      Router.push("/");
+    },
   });
 
   const handleChange = (e) => {

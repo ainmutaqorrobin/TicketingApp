@@ -1,9 +1,9 @@
 import Header from "../components/pages/header";
 
-function Layout({ children, currentUser }) {
+function Layout({ children }) {
   return (
     <>
-      <Header currentUser={currentUser} />
+      <Header/>
       <main>{children}</main>
     </>
   );

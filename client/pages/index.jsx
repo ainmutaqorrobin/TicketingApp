@@ -1,9 +1,9 @@
 import { getCurrentUser } from "../lib/get-current-user";
 import Layout from "./layout";
 
-function HomePage({ user }) {
+function HomePage() {
   return (
-    <Layout currentUser={user}>
+    <Layout>
       <h1>Home Page</h1>
     </Layout>
   );
