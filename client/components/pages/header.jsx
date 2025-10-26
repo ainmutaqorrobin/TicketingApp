@@ -19,7 +19,7 @@ function Header({ currentUser }) {
       <div className="container">
         {/* Brand Logo */}
         <Link href="/" className="navbar-brand fw-bold text-primary fs-4">
-          <i className="bi bi-ticket-perforated-fill me-2"></i>GitTix
+          <i className="bi bi-ticket-perforated-fill me-2"></i>Ticket4U
         </Link>
 
         {/* Toggler (for mobile) */}
