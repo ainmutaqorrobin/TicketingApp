@@ -6,6 +6,7 @@ function Header() {
   const links = [
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
+    currentUser && { label: "Create Ticket", href: "/tickets/new" },
     currentUser && { label: "Sign Out", href: "/auth/signout" },
   ]
     .filter(Boolean)
