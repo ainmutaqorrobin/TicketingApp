@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { API } from "../const/api";
 import { buildClient } from "../lib/build-client";
 
@@ -10,6 +11,9 @@ function HomePage({ tickets }) {
     <tr key={ticket.id}>
       <td>{ticket.title}</td>
       <td>{ticket.price}</td>
+      <td>
+        <Link href={`/tickets/${ticket.id}`}>View</Link>
+      </td>
     </tr>
   ));
 
@@ -21,6 +25,7 @@ function HomePage({ tickets }) {
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>{ticketList}</tbody>

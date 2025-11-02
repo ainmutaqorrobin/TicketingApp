@@ -5,6 +5,7 @@ export const API = {
   SIGN_OUT: "/api/users/signout",
 
   TICKET: "/api/tickets",
+  ORDER: "/api/orders",
 };
 
 // This is the URL for the ingress controller in a Kubernetes cluster.
