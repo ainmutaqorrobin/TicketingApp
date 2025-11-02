@@ -6,16 +6,25 @@ function HomePage({ tickets }) {
     return <h1>Failed to load tickets 😢</h1>;
   }
 
+  const ticketList = tickets.map((ticket) => (
+    <tr key={ticket.id}>
+      <td>{ticket.title}</td>
+      <td>{ticket.price}</td>
+    </tr>
+  ));
+
   return (
     <div className="container mt-4">
       <h1>Tickets List</h1>
-      <ul className="list-group mt-3">
-        {tickets.map((ticket) => (
-          <li key={ticket.id} className="list-group-item">
-            <strong>{ticket.title}</strong> — ${ticket.price}
-          </li>
-        ))}
-      </ul>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
     </div>
   );
 }
