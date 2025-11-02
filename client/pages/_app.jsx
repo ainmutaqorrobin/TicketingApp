@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import Script from "next/script";
 import { UserProvider } from "../context/user-context";
 import Header from "../components/pages/header";
